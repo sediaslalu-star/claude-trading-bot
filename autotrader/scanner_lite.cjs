@@ -183,17 +183,37 @@ function readChartDualTimeframe() {
 
   // ── 1. Switch to 15min → read bias + structure ──
   runMCPTool('chart_set_timeframe', '{"timeframe":"15"}');
+  // Wait 3s for LuxAlgo indicators to fully load on new timeframe
+  const wait15 = Date.now() + 3000;
+  while (Date.now() < wait15) {}
   results.tf15.quote = runMCPTool('quote_get');
   results.tf15.studies = runMCPTool('data_get_study_values');
   results.tf15.labels = runMCPTool('data_get_pine_labels', '{"study_filter":"Price Action","max_labels":10}');
   killMCPZombies();
 
+  // Retry if studies came back empty (LuxAlgo still loading)
+  if (!results.tf15.studies?.success || (results.tf15.studies.studies || []).length === 0) {
+    log('15min studies empty — retrying after 3s...');
+    const retry15 = Date.now() + 3000;
+    while (Date.now() < retry15) {}
+    results.tf15.studies = runMCPTool('data_get_study_values');
+    killMCPZombies();
+  }
+
   // ── 2. Switch to 5min → read entry signals ──
   runMCPTool('chart_set_timeframe', '{"timeframe":"5"}');
-  // Wait for chart to load new timeframe data
-  const waitUntil = Date.now() + 2000;
-  while (Date.now() < waitUntil) {}
+  // Wait 3s for LuxAlgo to reload on 5min
+  const wait5 = Date.now() + 3000;
+  while (Date.now() < wait5) {}
   results.tf5.studies = runMCPTool('data_get_study_values');
+
+  // Retry if 5min studies empty
+  if (!results.tf5.studies?.success || (results.tf5.studies.studies || []).length === 0) {
+    log('5min studies empty — retrying after 3s...');
+    const retry5 = Date.now() + 3000;
+    while (Date.now() < retry5) {}
+    results.tf5.studies = runMCPTool('data_get_study_values');
+  }
   killMCPZombies();
 
   return results;
