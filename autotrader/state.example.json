@@ -1,0 +1,13 @@
+{
+  "trades_today": 0,
+  "last_trade_date": "",
+  "open_position": false,
+  "entry_price": 0,
+  "direction": "",
+  "daily_pnl": 0,
+  "tp1_hit": false,
+  "tp2_hit": false,
+  "current_sl": 0,
+  "scan_count": 0,
+  "prev_hyperWave": 50
+}

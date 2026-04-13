@@ -4,3 +4,16 @@ scripts/current.pine
 temp_*
 *.log
 discovery-log.json
+
+# State files (contain runtime data)
+autotrader/state.json
+autotrader/trades.log
+
+# Secrets
+alerts/config.json
+
+# Temp analysis scripts
+calc_sr.cjs
+detect_fvg.cjs
+sr_helper.js
+run_tool.cjs

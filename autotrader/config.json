@@ -1,0 +1,80 @@
+{
+  "enabled": true,
+  "mode": "live",
+  "symbol": "XAUUSD",
+  "timeframe_bias": "15",
+  "timeframe_entry": "5",
+
+  "risk": {
+    "lot_size": 0.01,
+    "max_open_positions": 1,
+    "max_trades_per_day": 3,
+    "max_daily_loss_usd": 50,
+    "stop_loss_required": true,
+    "min_rr": 2.0
+  },
+
+  "entry_conditions": {
+    "short": {
+      "description": "Sell when price rejects at Smart Trail / EQ zone with bearish structure",
+      "all_required": [
+        "price_below_smart_trail",
+        "trend_strength_above_5",
+        "bearish_structure"
+      ],
+      "any_required": [
+        "price_in_eq_zone",
+        "price_at_resistance",
+        "bearish_signal_fired"
+      ]
+    },
+    "long": {
+      "description": "Buy when price reacts at FVG / demand zone with bullish confirmation",
+      "all_required": [
+        "price_above_discount_top",
+        "bullish_structure_or_choch"
+      ],
+      "any_required": [
+        "price_in_fvg_zone",
+        "price_at_support",
+        "bullish_signal_fired"
+      ]
+    }
+  },
+
+  "zones": {
+    "short_entry_top": 4738,
+    "short_entry_bottom": 4730,
+    "short_sl": 4770,
+    "short_tp1": 4700,
+    "short_tp2": 4655,
+    "short_tp3": 4611,
+
+    "long_entry_top": 4710,
+    "long_entry_bottom": 4695,
+    "long_sl": 4670,
+    "long_tp1": 4735,
+    "long_tp2": 4766,
+    "long_tp3": 4800
+  },
+
+  "management": {
+    "tp1_close_percent": 40,
+    "tp2_close_percent": 30,
+    "tp3_close_percent": 30,
+    "move_sl_to_be_at_tp1": true
+  },
+
+  "schedule": {
+    "active_hours_utc": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23],
+    "skip_weekends": true,
+    "skip_news_window_minutes": 30
+  },
+
+  "notifications": {
+    "telegram_on_scan": false,
+    "telegram_on_trade": true,
+    "telegram_on_skip": true,
+    "telegram_on_error": true
+  }
+}
